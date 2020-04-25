@@ -121,7 +121,7 @@ Create table ThueMay
 	GioVao time not null,
 	GioRa time not null,
 	MaNV nvarchar(30) not null,
-	TongTien money not null,
+	TongTien float not null,
 	GhiChu nvarchar(50)
 )
 --DonGia (MaDonGia, TenDonGia)
@@ -144,6 +144,7 @@ Create table BaoTri
 	MaNBT nvarchar(30) not null,
 	TongChiPhi money not null
 )
+
 --ChiTietBaoTri (MaGiaiPhap, TenGiaiPhap)
 Create table ChiTietBaoTri
 (	
@@ -152,7 +153,7 @@ Create table ChiTietBaoTri
 	MaNguyenNhan nvarchar(30) not null,
 	MaTinhTrang nvarchar(30) not null,
 	MaGiaiPhap nvarchar(30) not null,
-	ThanhTien money not null,
+	ThanhTien float not null,
 	Constraint PK_CTBT primary key (MaBaoTri, MaMay)
 )
 --TinhTrang (MaGiaiPhap, TenGiaiPhap)
@@ -172,7 +173,6 @@ Create table NhaBaoTri
 	DiaChi nvarchar(100) not null,
 	SDT nvarchar(30) not null
 )
-
 ---------------------
 -- TẠO CÁC RÀNG BUỘC
 --Khóa ngoại của máy tính
@@ -222,10 +222,9 @@ Alter table ChiTietBaoTri
 Add constraint FK_CT_GP Foreign key (MaGiaiPhap) references GiaiPhap
 --Kiểm tra
 Alter table MayTinh
-Add constraint CC_MT Check(TinhTrang = 'Trống' or TinhTrang = 'Đã Thuê')
+Add constraint CC_MT Check(TinhTrang = 'Trong' or TinhTrang = 'Đa Thue')
 Alter table NhanVien
 Add constraint CC_NV Check(GioiTinh = 'Nam' or GioiTinh = 'Nu')
-
 ------------------------------------------
 --Insert dữ liệu
 Insert into Phong (MaPhong, TenPhong, SoMay) Values ('P01', 'Phòng 1', '15')
@@ -276,37 +275,41 @@ Insert into Loa(MaLoa,TenLoa) Values('L2','BOSE')
 Insert into Loa(MaLoa,TenLoa) Values('L3','LOGITECH')
 
 Insert into MayTinh(MaMay,TenMay,MaPhong,MaOCung,MaDLuong,MaChip,MaRam,MaTocDo,MaManHinh,MaSizeMH,MaChuot,MaBanPhim,MaODia,MaLoa,TinhTrang,Ghichu)
-Values ('MT1', 'ASUS','P02','OC1','DL3','MC1','R1','TD1','MH3','SZ1','C1','BP1','OD1','L2','Trống','')
+Values ('MT1', 'ASUS','P02','OC1','DL3','MC1','R1','TD1','MH3','SZ1','C1','BP1','OD1','L2','Trong','')
 Insert into MayTinh(MaMay,TenMay,MaPhong,MaOCung,MaDLuong,MaChip,MaRam,MaTocDo,MaManHinh,MaSizeMH,MaChuot,MaBanPhim,MaODia,MaLoa,TinhTrang,Ghichu)
-Values ('MT2', 'DELL','P03','OC2','DL2','MC2','R2','TD2','MH2','SZ2','C2','BP2','OD2','L1','Đã Thuê','')
+Values ('MT2', 'DELL','P03','OC2','DL2','MC2','R2','TD2','MH2','SZ2','C2','BP2','OD2','L1','Đa Thue','')
 Insert into MayTinh(MaMay,TenMay,MaPhong,MaOCung,MaDLuong,MaChip,MaRam,MaTocDo,MaManHinh,MaSizeMH,MaChuot,MaBanPhim,MaODia,MaLoa,TinhTrang,Ghichu)
-Values ('MT3', 'ASUS','P01','OC1','DL3','MC3','R1','TD3','MH1','SZ3','C3','BP3','OD3','L3','Trống','')
+Values ('MT3', 'ASUS','P01','OC1','DL3','MC3','R1','TD3','MH1','SZ3','C3','BP3','OD3','L3','Trong','')
 
-
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV1', 'Trần Ngọc Hạnh Nguyên','01', '12/12/1996','Nu', '', '0359853210')
+Values ('NV1', 'Tran Ngoc Hanh Nguyen','01', '12/12/1996','Nu', '', '0359853210')
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV2', 'Phạm Văn Tuấn','03', '06/12/1995','Nam', '', '0345689101')
+Values ('NV2', 'Pham Van Tuan','03', '06/12/1995','Nam', '', '0345689101')
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV3', 'Hà Đăng Ngọc','03', '12/08/1997','Nam', '', '0359123458')
+Values ('NV3', 'Ha Đang Ngoc','03', '12/08/1997','Nam', '', '0359123458')
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV4', 'Nguyễn Thùy Dương','01', '12/12/1999','Nu', '', '0343120579')
+Values ('NV4', 'Nguyen Thuy Duong','01', '12/12/1999','Nu', '', '0343120579')
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV5', 'Lưu Quang Anh','02', '12/12/1993','Nam', '', '0999682135')
+Values ('NV5', 'Luu Quang Anh','02', '12/12/1993','Nam', '', '0999682135')
 Insert into NhanVien(MaNV, TenNV, MaCa, NamSinh, GioiTinh, DiaChi, SDT)
-Values ('NV6', 'Trương Ngọc Linh','01', '12/12/2000','Nu', '', '0343171069')
+Values ('NV6', 'Truong Ngoc Linh','01', '12/12/2000','Nu', '', '0343171069')
 
 Insert into CaLam(MaCa,TenCa,ThoiGian) Values('01','Ca 1','8.00-13.00')
 Insert into CaLam(MaCa,TenCa,ThoiGian) Values('02','Ca 2','13.00-18.00')
 Insert into CaLam(MaCa,TenCa,ThoiGian) Values('03','Ca 3','18.00-23.00')
 
 Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
-Values('STT1','P01','MT1','Nguyễn Văn A','04/02/2020','10:30','11:30','NV2',20000,'')
+Values('STT1','P01','MT1','Nguyen Van A','01/30/2020','10:30','11:30','NV2',20000,'')
 Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
-Values('STT2','P03','MT2','Nguyễn Thị B','04/06/2020','09:00','13:15','NV1',40000,'')
+Values('STT2','P03','MT2','Nguyen Thi B','02/15/2020','09:00','13:15','NV1',42000,'')
 Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
-Values('STT3','P02','MT3','Trần Ngọc Minh Thành','04/05/2020','16:00','17:00','NV3',100000,'')
-
+Values('STT3','P02','MT3','Tran Ngoc Minh Thanh','03/05/2020','16:00','17:00','NV3',20000,'')
+Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
+Values('STT4','P01','MT2','Nguyen Minh Ngoc','04/02/2020','10:30','11:30','NV2',20000,'')
+Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
+Values('STT5','P02','MT3','Pham Manh Hung','04/10/2020','09:00','13:15','NV1',40000,'')
+Insert into ThueMay(MaSTT, MaPhong,MaMay,TenKhach,NgayThue,GioVao,GioRa,MaNV,TongTien,GhiChu) 
+Values('STT6','P03','MT1','Ha Dac Huy','04/20/2020','16:00','17:00','NV3',100000,'')
 
 Insert into DonGia(MaDonGia,TenDonGio,DonGiaThueGio) Values('DG1','đơn giá 1','10000')
 
@@ -324,6 +327,12 @@ Insert into ChiTietBaoTri(MaBaoTri,MaMay,MaTinhTrang,MaNguyenNhan,MaGiaiPhap,Tha
 Values('BT2','MT3','TT2','NN2','GP2',2500000)
 Insert into ChiTietBaoTri(MaBaoTri,MaMay,MaTinhTrang,MaNguyenNhan,MaGiaiPhap,ThanhTien) 
 Values('BT3','MT1','TT3','NN1','GP3',1500000)
+Insert into ChiTietBaoTri(MaBaoTri,MaMay,MaTinhTrang,MaNguyenNhan,MaGiaiPhap,ThanhTien) 
+Values('BT1','MT3','TT1','NN2','GP1',1000000)
+Insert into ChiTietBaoTri(MaBaoTri,MaMay,MaTinhTrang,MaNguyenNhan,MaGiaiPhap,ThanhTien) 
+Values('BT2','MT4','TT2','NN2','GP2',2500000)
+Insert into ChiTietBaoTri(MaBaoTri,MaMay,MaTinhTrang,MaNguyenNhan,MaGiaiPhap,ThanhTien) 
+Values('BT3','MT5','TT3','NN1','GP3',1500000)
 
 Insert into TinhTrang(MaTinhTrang,TenTinhTrang) Values('TT1','Hỏng bàn phím')
 Insert into TinhTrang(MaTinhTrang,TenTinhTrang) Values('TT2','Hỏng ổ cứng')
@@ -335,4 +344,7 @@ Insert into NguyenNhan(MaNguyenNhan,TenNguyenNhan) Values('NN2','KH')
 Insert into NhaBaoTri(MaNBT,TenNBT,DiaChi,SDT) Values('NBT1','Trần Văn Hùng','Hà Nội','034526797')
 Insert into NhaBaoTri(MaNBT,TenNBT,DiaChi,SDT) Values('NBT2','Phạm Tiến Thắng','Bắc Ninh','037543789')
 Insert into NhaBaoTri(MaNBT,TenNBT,DiaChi,SDT) Values('NBT3','Vũ Ngọc Hải','Hà Nội','013965478')
-select * from ThueMay
+
+Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT1','03/15/2020','NBT1',1000000)
+Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT2','04/15/2019','NBT3',1850000)
+Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT3','02/20/2020','NBT2',2100000)
