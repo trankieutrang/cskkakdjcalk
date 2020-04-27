@@ -105,6 +105,7 @@ Create table NhanVien
 	DiaChi nvarchar(100),
 	SDT nvarchar(30)
 )
+
 --CaLam (MaCa, TenCa)
 Create table CaLam
 (	MaCa nvarchar(30) primary key not null,
@@ -220,6 +221,10 @@ Alter table ChiTietBaoTri
 Add constraint FK_CT_NN Foreign key (MaNguyenNhan) references NguyenNhan
 Alter table ChiTietBaoTri
 Add constraint FK_CT_GP Foreign key (MaGiaiPhap) references GiaiPhap
+Alter table ChiTietBaoTri
+Add constraint FK_CT_MT Foreign key (MaMay) references MayTinh
+Alter table ChiTietBaoTri
+Add constraint FK_CT_BT Foreign key (MaBaoTri) references BaoTri
 --Kiểm tra
 Alter table MayTinh
 Add constraint CC_MT Check(TinhTrang = 'Trong' or TinhTrang = 'Đa Thue')
@@ -348,3 +353,7 @@ Insert into NhaBaoTri(MaNBT,TenNBT,DiaChi,SDT) Values('NBT3','Vũ Ngọc Hải',
 Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT1','03/15/2020','NBT1',1000000)
 Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT2','04/15/2019','NBT3',1850000)
 Insert into BaoTri(MaBaoTri,NgayBaoTri,MaNBT,TongChiPhi) Values('BT3','02/20/2020','NBT2',2100000)
+update Phong set SoMay=(SoMay+1) WHERE MaPhong ='P01'
+SELECT MayTinh.MaPhong,TenPhong,MayTinh.MaMay,TenMay,TinhTrang FROM MayTinh join Phong on MayTinh.MaPhong=Phong.MaPhong
+select ThueMay.MaPhong,ThueMay.MaMay,TenMay,TinhTrang from ThueMay join MayTinh on ThueMay.MaMay=MayTinh.MaMay 
+select ThueMay.MaPhong, ThueMay.MaMay, TenMay, NgayThue, TongTien from ThueMay join MayTinh on ThueMay.MaMay=MayTinh.MaMay where TinhTrang='Trong'
